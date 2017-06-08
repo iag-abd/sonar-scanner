@@ -42,7 +42,7 @@ RUN echo "basic setup" && \
 WORKDIR /usr/src
 
 RUN echo "setups sonar" && \
-  wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_VERSION}.zip && \
+  wget -q --no-check-certificate https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_VERSION}.zip && \
   unzip sonar-scanner-cli-${SONAR_VERSION}.zip && \
   rm sonar-scanner-cli-${SONAR_VERSION}.zip  && \
   mkdir /opt/sonar && \
@@ -51,9 +51,9 @@ RUN echo "setups sonar" && \
   ln -s /opt/sonar/latest/bin/sonar-scanner /usr/bin/sonar-scanner && \
   ln -s /opt/sonar/latest/bin/sonar-scanner-debug /usr/bin/sonar-scanner-debug
 
-ADD  $MAVEN_REMOTE_LOCATION /usr/src/maven.tar.gz
-
 RUN echo "setup maven" && \
+  wget -q --no-check-certificate ${MAVEN_REMOTE_LOCATION} && \
+  mv apache-maven-${MAVEN_VERSION}-bin.tar.gz  /usr/src/maven.tar.gz && \
   mkdir -p /opt/maven  && \
   tar xvf /usr/src/maven.tar.gz -C /opt/maven  && \
   ln -s /opt/maven/apache-maven-${MAVEN_VERSION} /opt/maven/latest && \
