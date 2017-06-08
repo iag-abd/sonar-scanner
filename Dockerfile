@@ -25,9 +25,8 @@ RUN groupadd -g ${gid} ${group} && \
     chown ${uid}:${gid} /app
 
 RUN echo "basic setup" && \
-    apt-get update -qq && \
-    apt-get upgrade -qq -y --no-install-recommends && \
-    apt-get install -qq -y --no-install-recommends \
+    apt-get update --allow-unauthenticated -qq && \
+    apt-get install --allow-unauthenticated -qq -y --no-install-recommends \
       curl \
       wget \
       git && \
