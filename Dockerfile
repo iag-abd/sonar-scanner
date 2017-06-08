@@ -15,6 +15,10 @@ ARG MAVEN_VERSION=3.5.0
 ENV MAVEN_REMOTE_LOCATION http://apache.uberglobalmirror.com/maven/maven-${MAVEN_MAJOR}/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
 ENV MAVEN_HOME /opt/maven/latest
 
+ARG PROPERTIES_PREFIX=base.
+
+COPY build.properties /${PROPERTIES_PREFIX}build.properties
+
 RUN groupadd -g ${gid} ${group} && \
     useradd -u ${uid} -g ${gid} -m -s /bin/bash ${user} && \
     mkdir /app && \
