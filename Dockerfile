@@ -25,11 +25,12 @@ RUN groupadd -g ${gid} ${group} && \
     chown ${uid}:${gid} /app
 
 RUN echo "basic setup" && \
-    apt-get update --allow-unauthenticated -qq && \
-    apt-get install --allow-unauthenticated -qq -y --no-install-recommends \
-      curl \
-      wget \
-      git && \
+  apt-get update --allow-unauthenticated -qq && \
+  apt-get upgrade --allow-unauthenticated -qq -y --no-install-recommends  && \
+  apt-get install --allow-unauthenticated -qq -y --no-install-recommends \
+    curl \
+    wget \
+    git && \
   apt-get clean -y && \
   apt-get autoclean -y && \
   apt-get autoremove -y && \
@@ -43,7 +44,7 @@ WORKDIR /usr/src
 
 RUN echo "setups sonar" && \
   wget -q --no-check-certificate https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_VERSION}.zip && \
-  unzip sonar-scanner-cli-${SONAR_VERSION}.zip && \
+  unzip -q sonar-scanner-cli-${SONAR_VERSION}.zip && \
   rm sonar-scanner-cli-${SONAR_VERSION}.zip  && \
   mkdir /opt/sonar && \
   mv sonar-scanner-${SONAR_VERSION} /opt/sonar && \
@@ -55,7 +56,7 @@ RUN echo "setup maven" && \
   wget -q --no-check-certificate ${MAVEN_REMOTE_LOCATION} && \
   mv apache-maven-${MAVEN_VERSION}-bin.tar.gz  /usr/src/maven.tar.gz && \
   mkdir -p /opt/maven  && \
-  tar xvf /usr/src/maven.tar.gz -C /opt/maven  && \
+  tar xf /usr/src/maven.tar.gz -C /opt/maven  && \
   ln -s /opt/maven/apache-maven-${MAVEN_VERSION} /opt/maven/latest && \
   ln -s /opt/maven/latest/bin/mvn /usr/bin/mvn  && \
   mkdir -p /home/${user}/.m2/repository && \
