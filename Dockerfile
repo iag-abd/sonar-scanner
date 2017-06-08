@@ -61,6 +61,8 @@ RUN echo "setup maven" && \
   ln -s /opt/maven/latest/bin/mvn /usr/bin/mvn  && \
   mkdir -p /home/${user}/.m2/repository && \
   chown -R ${user}: /home/${user}/
+
+RUN echo "hi"
   
 USER 1000
 WORKDIR /app
